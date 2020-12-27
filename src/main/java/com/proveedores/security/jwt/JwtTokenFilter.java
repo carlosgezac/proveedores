@@ -36,12 +36,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             String token = getToken(req);
             if (token != null && jwtProvider.isValidToken(token)) {
                 String userName = jwtProvider.getUserNameFromToken(token);
+                logger.error("userName: "+userName);
                 UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(userName);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (Exception ex) {
-            logger.error("Fallo en doFilter");
+            logger.error("Fallo en doFilter: "+ ex.getMessage());
         }
         fc.doFilter(req, res);
     }

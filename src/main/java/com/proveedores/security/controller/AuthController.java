@@ -73,6 +73,7 @@ public class AuthController {
         return new ResponseEntity("Usuario creado.", HttpStatus.CREATED);
     }
 
+    @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuarioDto loginUsuarioDto, BindingResult bindingResult) {
         //Verificar si hay errorres.
         if (bindingResult.hasErrors()) {

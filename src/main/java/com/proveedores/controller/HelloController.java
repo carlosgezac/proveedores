@@ -12,4 +12,9 @@ public class HelloController {
     public ResponseEntity<?> home() {
         return new ResponseEntity("hello", HttpStatus.OK);
     }
+    
+    @GetMapping("/restringido")
+    public ResponseEntity<?> res() {
+        return new ResponseEntity("restringido", HttpStatus.OK);
+    }
 }

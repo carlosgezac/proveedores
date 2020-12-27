@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,7 +58,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "estatus")
     private int estatus;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = {
         @JoinColumn(name = "id_rol")})
     private Set<Rol> roles;

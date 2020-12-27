@@ -25,7 +25,7 @@ public class JwtProvider {
 
     @Value("${jwt.secret}") //Valor del archivo properties
     private String secret;
-    
+
     @Value("${jwt.expiration}") //Valor del archivo properties
     private Integer expiration;
 
@@ -33,20 +33,18 @@ public class JwtProvider {
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
         return Jwts.builder().setSubject(usuarioPrincipal.getUsername())
                 .setIssuedAt(new Date()) //Fecha/tiempo de inicio de la expiracion
-                .setExpiration(new Date(new Date().getTime() + expiration))//Fecha/tiempo expiracion
+                .setExpiration(new Date(new Date().getTime() + expiration * 1000))//Fecha/tiempo expiracion
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
     public String getUserNameFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).
-                parseClaimsJws(token).getBody().getSubject(); //getSubject, es el userName
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject(); //getSubject, es el userName
     }
 
     public boolean isValidToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret).
-                    parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (MalformedJwtException me) {
             logger.error("Token mal formado.");

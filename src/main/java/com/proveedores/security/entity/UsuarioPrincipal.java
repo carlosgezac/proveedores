@@ -21,7 +21,7 @@ public class UsuarioPrincipal implements UserDetails {
 
     public static UsuarioPrincipal loadUser(Usuario usuario) {
         List<GrantedAuthority> authorities = usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre())).collect(Collectors.toList());
-        return new UsuarioPrincipal(usuario.getNombre(), usuario.getPassword(), authorities);
+        return new UsuarioPrincipal(usuario.getUserName(), usuario.getPassword(), authorities);
     }
 
     @Override
@@ -41,22 +41,22 @@ public class UsuarioPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
 }
